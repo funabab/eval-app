@@ -5,7 +5,7 @@ import FormControl from "../src/components/FormControl";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import IconLoginGoogle from "../src/components/icons/IconLoginGoogle";
 
-export const LoginPage = () => {
+export const LoginScreen = () => {
   return (
     <View className="flex-1 bg-white">
       <Stack.Screen
@@ -62,7 +62,7 @@ export const LoginPage = () => {
             </TouchableOpacity>
 
             <Link
-              href="/login"
+              href="/register"
               className="mt-3 text-center font-poppins-semibold600 text-base"
             >
               Don’t have an account? Signup
@@ -74,4 +74,4 @@ export const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default LoginScreen;
