@@ -34,6 +34,7 @@ const BaseLayout = () => {
     <Stack
       screenOptions={{
         headerShadowVisible: false,
+        headerShown: false,
         headerTitle: (props) => (
           <Text className="font-poppins-semibold600 text-xl px-7">
             {props.children}

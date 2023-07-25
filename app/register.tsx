@@ -11,6 +11,7 @@ const RegitserScreen = () => {
         options={{
           title: "Sign Up",
           headerBackVisible: false,
+          headerShown: true,
         }}
       />
       <ScrollView className="flex-1">

@@ -12,6 +12,7 @@ export const LoginScreen = () => {
       <Stack.Screen
         options={{
           title: "Log in",
+          headerShown: true,
         }}
       />
       <ScrollView className="flex-1">

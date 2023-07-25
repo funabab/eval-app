@@ -1,9 +1,14 @@
 import React from "react";
-import { Stack } from "expo-router";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Tabs } from "expo-router";
+import {
+  BackHandler,
+  Platform,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import IconDashboardUser from "../../src/components/icons/IconDashboardUser";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { ScrollView } from "react-native-gesture-handler";
 import IconDashboardProfile from "../../src/components/icons/IconDashboardProfile";
 import IconDashboardEvaluation from "../../src/components/icons/IconDashboardEvaluation";
@@ -11,15 +16,18 @@ import IconDashboardAbout from "../../src/components/icons/IconDashboardAbout";
 import IconDashboardNotification from "../../src/components/icons/IconDashboardNotification";
 import IconDashboardTimetable from "../../src/components/icons/IconDashboardTimetable";
 import IconDashboardExit from "../../src/components/icons/IconDashboardExit";
+import IconTabHome from "../../src/components/icons/IconTabHome";
 
 interface Props {}
 
 const DashboardHome: React.FC<Props> = () => {
   return (
-    <SafeAreaView className="flex-1 bg-white">
-      <Stack.Screen
+    <View className="flex-1 bg-white">
+      <Tabs.Screen
         options={{
           headerShown: false,
+          tabBarIcon: ({ color }) => <IconTabHome color={color} />,
+          title: "Home",
         }}
       />
       <ScrollView className="flex-1 px-5">
@@ -90,17 +98,19 @@ const DashboardHome: React.FC<Props> = () => {
                 </View>
               </TouchableOpacity>
 
-              <TouchableOpacity>
-                <View className="flex">
-                  <IconDashboardExit />
-                  <Text className="text-center">Exit</Text>
-                </View>
-              </TouchableOpacity>
+              {Platform.OS === "android" && (
+                <TouchableOpacity onPress={() => BackHandler.exitApp()}>
+                  <View className="flex">
+                    <IconDashboardExit />
+                    <Text className="text-center">Exit</Text>
+                  </View>
+                </TouchableOpacity>
+              )}
             </View>
           </View>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 
