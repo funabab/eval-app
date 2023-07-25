@@ -5,16 +5,17 @@ import {
   Poppins_500Medium,
   Poppins_600SemiBold,
   Poppins_600SemiBold_Italic,
+  Poppins_400Regular_Italic,
   Poppins_400Regular,
 } from "@expo-google-fonts/poppins";
 import { Text } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 SplashScreen.preventAutoHideAsync();
 
 const BaseLayout = () => {
   const [fontsLoaded] = useFonts({
     Poppins_400Regular,
+    Poppins_400Regular_Italic,
     Poppins_500Medium,
     Poppins_600SemiBold,
     Poppins_600SemiBold_Italic,

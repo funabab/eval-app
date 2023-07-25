@@ -42,7 +42,10 @@ export const LoginScreen = () => {
                 />
               </View>
             </View>
-            <TouchableOpacity className="mt-10">
+            <TouchableOpacity
+              className="mt-10"
+              onPress={() => router.push("/dashboard")}
+            >
               <View className="w-full bg-black py-4 px-2 rounded-xl">
                 <Text className="font-poppins-semibold600 text-white text-sm text-center">
                   Login
