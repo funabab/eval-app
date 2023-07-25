@@ -1,4 +1,4 @@
-import { Link, Stack } from "expo-router";
+import { Link, Stack, useRouter } from "expo-router";
 import IconLoginUser from "../src/components/icons/IconLoginUser";
 import { Button, ScrollView, Text, View } from "react-native";
 import FormControl from "../src/components/FormControl";
@@ -6,6 +6,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import IconLoginGoogle from "../src/components/icons/IconLoginGoogle";
 
 export const LoginScreen = () => {
+  const router = useRouter();
   return (
     <View className="flex-1 bg-white">
       <Stack.Screen
@@ -14,7 +15,7 @@ export const LoginScreen = () => {
         }}
       />
       <ScrollView className="flex-1">
-        <View className="flex-1 items-center justify-center py-10">
+        <View className="flex-1 items-center justify-center pt-10 pb-20">
           <IconLoginUser />
           <Text className="text-center text-base mt-2 font-poppins-semibold600">
             Welcome back
@@ -52,7 +53,7 @@ export const LoginScreen = () => {
               or
             </Text>
 
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => router.push("/dashboard")}>
               <View className="w-full flex flex-row items-center py-3 px-2 rounded-xl justify-center border-2 border-black">
                 <IconLoginGoogle />
                 <Text className="font-poppins-semibold600 text-black text-sm text-center ml-4">

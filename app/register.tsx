@@ -10,13 +10,14 @@ const RegitserScreen = () => {
       <Stack.Screen
         options={{
           title: "Sign Up",
+          headerBackVisible: false,
         }}
       />
       <ScrollView className="flex-1">
         <Text className="text-center font-poppins-semiboldItalic600">
           Please fill out every into
         </Text>
-        <View className="flex-1 items-center justify-center pt-2 pb-10 px-7">
+        <View className="flex-1 items-center justify-center pt-2 pb-20 px-7">
           <View className="space-y-4 w-full">
             <View>
               <FormControlInput

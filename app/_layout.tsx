@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { SplashScreen, Stack } from "expo-router";
 import {
   useFonts,
+  Poppins_500Medium,
   Poppins_600SemiBold,
   Poppins_600SemiBold_Italic,
   Poppins_400Regular,
@@ -14,6 +15,7 @@ SplashScreen.preventAutoHideAsync();
 const BaseLayout = () => {
   const [fontsLoaded] = useFonts({
     Poppins_400Regular,
+    Poppins_500Medium,
     Poppins_600SemiBold,
     Poppins_600SemiBold_Italic,
   });
@@ -32,13 +34,12 @@ const BaseLayout = () => {
     <Stack
       screenOptions={{
         headerShadowVisible: false,
-        header: (props) => (
-          <SafeAreaView>
-            <Text className="font-poppins-semibold600 text-xl px-7 py-5">
-              {props.options.title}
-            </Text>
-          </SafeAreaView>
+        headerTitle: (props) => (
+          <Text className="font-poppins-semibold600 text-xl px-7">
+            {props.children}
+          </Text>
         ),
+        navigationBarColor: "#fff",
         headerStyle: {
           backgroundColor: "#fff",
         },

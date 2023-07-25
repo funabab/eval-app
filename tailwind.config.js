@@ -6,6 +6,7 @@ module.exports = {
       fontFamily: {
         "poppins-regular400": ["Poppins_400Regular"],
         "poppins-semibold600": ["Poppins_600SemiBold"],
+        "poppins-medium500": ["Poppins_500Medium"],
         "poppins-semiboldItalic600": ["Poppins_600SemiBold_Italic"],
       },
     },
