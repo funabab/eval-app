@@ -10,7 +10,14 @@ const DashboardLayout = () => {
         tabBarActiveTintColor: "#000",
         tabBarInactiveTintColor: "#00000066",
       }}
-    />
+    >
+      <Tabs.Screen
+        name="courses/edit/index"
+        options={{
+          href: null,
+        }}
+      />
+    </Tabs>
   );
 };
 

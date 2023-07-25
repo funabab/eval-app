@@ -1,13 +1,13 @@
 import React from "react";
 import { Tabs, useRouter } from "expo-router";
-import { BackHandler, Button, Text, View } from "react-native";
-import IconTabEvaluation from "../../../src/components/icons/IconTabEvaluation";
+import { Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import IconDashboardUser from "../../../src/components/icons/IconDashboardUser";
-import { AntDesign } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
+import { AntDesign } from "@expo/vector-icons";
+import IconTabEvaluation from "../../../../src/components/icons/IconTabEvaluation";
+import IconDashboardUser from "../../../../src/components/icons/IconDashboardUser";
 
-const CourseScreen = () => {
+const EditCourseScreen = () => {
   const router = useRouter();
   return (
     <View className="flex-1 bg-white">
@@ -27,7 +27,11 @@ const CourseScreen = () => {
           ),
           headerRight: () => (
             <TouchableOpacity className="px-2">
-              <IconDashboardUser width={24} height={24} />
+              <IconDashboardUser
+                width={24}
+                height={24}
+                onPress={() => router.push("/dashboard/profile")}
+              />
             </TouchableOpacity>
           ),
         }}
@@ -76,4 +80,4 @@ const CourseScreen = () => {
   );
 };
 
-export default CourseScreen;
+export default EditCourseScreen;
