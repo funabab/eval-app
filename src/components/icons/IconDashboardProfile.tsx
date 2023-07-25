@@ -1,9 +1,13 @@
 import React from "react";
 import { Defs, G, Path, Rect, Svg } from "react-native-svg";
 
-const IconDashboardProfile = () => {
+interface Props {
+  size?: number;
+}
+
+const IconDashboardProfile: React.FC<Props> = ({ size = 89 }) => {
   return (
-    <Svg width={89} height={89} fill="none">
+    <Svg width={size} height={size} fill="none">
       <G filter="url(#a)">
         <Rect
           width={56}
