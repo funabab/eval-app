@@ -1,5 +1,5 @@
 import React from "react";
-import { Tabs } from "expo-router";
+import { Tabs, useRouter } from "expo-router";
 import {
   BackHandler,
   Platform,
@@ -21,6 +21,7 @@ import IconTabHome from "../../src/components/icons/IconTabHome";
 interface Props {}
 
 const DashboardHome: React.FC<Props> = () => {
+  const router = useRouter();
   return (
     <View className="flex-1 bg-white">
       <Tabs.Screen
@@ -61,7 +62,9 @@ const DashboardHome: React.FC<Props> = () => {
             </Text>
 
             <View className="flex flex-row justify-between mt-10">
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => router.push("/dashboard/profile")}
+              >
                 <View className="flex">
                   <IconDashboardProfile />
                   <Text className="text-center">Profile</Text>

@@ -4,6 +4,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
+        "poppins-light300": ["Poppins_300Light"],
         "poppins-regular400": ["Poppins_400Regular"],
         "poppins-regularItalic400": ["Poppins_400Regular_Italic"],
         "poppins-semibold600": ["Poppins_600SemiBold"],
