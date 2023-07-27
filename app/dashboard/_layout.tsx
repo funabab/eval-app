@@ -1,5 +1,5 @@
 import React from "react";
-import { Tabs, useRouter } from "expo-router";
+import { Tabs } from "expo-router/tabs";
 import IconTabProfile from "../../src/components/icons/IconTabProfile";
 import IconTabEvaluation from "../../src/components/icons/IconTabEvaluation";
 import { TouchableOpacity } from "react-native";
@@ -7,25 +7,18 @@ import { AntDesign } from "@expo/vector-icons";
 import IconDashboardUser from "../../src/components/icons/IconDashboardUser";
 import IconTabNotification from "../../src/components/icons/IconTabNotification";
 import IconTabHome from "../../src/components/icons/IconTabHome";
+import { useRouter } from "expo-router";
 
 const DashboardLayout = () => {
   const router = useRouter();
   return (
     <Tabs
-      initialRouteName="/dashboard"
       screenOptions={{
         tabBarShowLabel: false,
         tabBarActiveTintColor: "#000",
         tabBarInactiveTintColor: "#00000066",
       }}
     >
-      <Tabs.Screen
-        name="courses/edit/index"
-        options={{
-          href: null,
-        }}
-      />
-
       <Tabs.Screen
         name="index"
         options={{
@@ -87,6 +80,13 @@ const DashboardLayout = () => {
             </TouchableOpacity>
           ),
           tabBarIcon: ({ color }) => <IconTabNotification color={color} />,
+        }}
+      />
+
+      <Tabs.Screen
+        name="courses/edit/index"
+        options={{
+          href: null,
         }}
       />
     </Tabs>
