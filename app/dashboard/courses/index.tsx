@@ -1,40 +1,11 @@
 import React from "react";
-import { Tabs, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import { FlatList, Text, TouchableOpacity, View } from "react-native";
-import IconTabEvaluation from "../../../src/components/icons/IconTabEvaluation";
-import { AntDesign } from "@expo/vector-icons";
-import IconDashboardUser from "../../../src/components/icons/IconDashboardUser";
 
 const CoursePage = () => {
   const router = useRouter();
   return (
     <View className="flex-1 bg-white">
-      <Tabs.Screen
-        options={{
-          title: "Courses",
-          headerTitleStyle: {
-            fontFamily: "Poppins_600SemiBold",
-            fontSize: 24,
-          },
-          headerTitleAlign: "center",
-          tabBarIcon: ({ color }) => <IconTabEvaluation color={color} />,
-          headerLeft: () => (
-            <TouchableOpacity className="px-2" onPress={() => router.back()}>
-              <AntDesign name="left" size={20} color="black" />
-            </TouchableOpacity>
-          ),
-          headerRight: () => (
-            <TouchableOpacity className="px-2">
-              <IconDashboardUser
-                width={24}
-                height={24}
-                onPress={() => router.push("/dashboard/profile")}
-              />
-            </TouchableOpacity>
-          ),
-        }}
-      />
-
       <Text className="text-center text-base font-poppins-regularItalic400">
         Your Registered Courses
       </Text>

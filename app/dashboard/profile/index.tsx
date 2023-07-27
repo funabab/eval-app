@@ -1,8 +1,6 @@
 import React from "react";
-import { Tabs, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import { FlatList, Text, TouchableOpacity, View } from "react-native";
-import IconTabProfile from "../../../src/components/icons/IconTabProfile";
-import { ScrollView } from "react-native-gesture-handler";
 import IconDashboardUser from "../../../src/components/icons/IconDashboardUser";
 import { SafeAreaView } from "react-native-safe-area-context";
 import clsx from "clsx";
@@ -13,13 +11,6 @@ const DashboardProfileScreen = () => {
   const router = useRouter();
   return (
     <SafeAreaView className="flex-1 justify-center bg-white">
-      <Tabs.Screen
-        options={{
-          title: "Profile",
-          headerShown: false,
-          tabBarIcon: ({ color }) => <IconTabProfile color={color} />,
-        }}
-      />
       <View className="flex-1 mt-10">
         <View className="flex items-center">
           <IconDashboardUser height={102} width={102} />

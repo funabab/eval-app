@@ -1,5 +1,5 @@
 import React from "react";
-import { Tabs, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import {
   BackHandler,
   Platform,
@@ -16,7 +16,6 @@ import IconDashboardAbout from "../../src/components/icons/IconDashboardAbout";
 import IconDashboardNotification from "../../src/components/icons/IconDashboardNotification";
 import IconDashboardTimetable from "../../src/components/icons/IconDashboardTimetable";
 import IconDashboardExit from "../../src/components/icons/IconDashboardExit";
-import IconTabHome from "../../src/components/icons/IconTabHome";
 
 interface Props {}
 
@@ -24,13 +23,6 @@ const DashboardHome: React.FC<Props> = () => {
   const router = useRouter();
   return (
     <View className="flex-1 bg-white">
-      <Tabs.Screen
-        options={{
-          headerShown: false,
-          tabBarIcon: ({ color }) => <IconTabHome color={color} />,
-          title: "Home",
-        }}
-      />
       <ScrollView className="flex-1 px-5">
         <View className="flex-1 justify-center mt-16">
           <View className="flex flex-row justify-between px-4">

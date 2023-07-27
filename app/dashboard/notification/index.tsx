@@ -1,8 +1,6 @@
 import React from "react";
-import { Tabs, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import { FlatList, Text, TouchableOpacity, View } from "react-native";
-import IconTabNotification from "../../../src/components/icons/IconTabNotification";
-import { AntDesign } from "@expo/vector-icons";
 
 const SAMPLE_NOTIFICATION = [
   {
@@ -23,24 +21,6 @@ const NotificationScreen = () => {
 
   return (
     <View className="flex-1 bg-white">
-      <Tabs.Screen
-        options={{
-          headerShown: true,
-          title: "Notification",
-          headerTitleAlign: "center",
-          headerTitleStyle: {
-            fontFamily: "Poppins_600SemiBold",
-            fontWeight: "600",
-          },
-          headerLeft: () => (
-            <TouchableOpacity className="px-4" onPress={() => router.back()}>
-              <AntDesign name="left" size={20} color="black" />
-            </TouchableOpacity>
-          ),
-          tabBarIcon: ({ color }) => <IconTabNotification color={color} />,
-        }}
-      />
-
       <View className="px-4 mt-10">
         <FlatList
           data={SAMPLE_NOTIFICATION}
