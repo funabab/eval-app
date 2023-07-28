@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { RegisterAccountBody, registerAccountBodySchema } from "../src/schemas";
 import { showMessage } from "react-native-flash-message";
 import { useHttpsCallable } from "react-firebase-hooks/functions";
-import { firebaseFunction } from "../src/firebase";
+import { firebaseFunction, signInWithGoogle } from "../src/firebase";
 import clsx from "clsx";
 
 const RegitserScreen = () => {
@@ -226,7 +226,10 @@ const RegitserScreen = () => {
             or
           </Text>
 
-          <TouchableOpacity className="w-full">
+          <TouchableOpacity
+            className="w-full"
+            onPress={() => signInWithGoogle()}
+          >
             <View className="flex flex-row items-center py-3 px-2 rounded-xl justify-center border-2 border-black">
               <IconLoginGoogle />
               <Text className="font-poppins-semibold600 text-black text-sm text-center ml-4">
