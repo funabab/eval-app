@@ -9,9 +9,10 @@ import {
   Poppins_600SemiBold,
   Poppins_600SemiBold_Italic,
 } from "@expo-google-fonts/poppins";
-import { Text } from "react-native";
+import { Text, View } from "react-native";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { FIREBASE_GOOGLE_AUTH_WEB_CLIENT_Id } from "@env";
+import FlashMessage from "react-native-flash-message";
 
 SplashScreen.preventAutoHideAsync();
 GoogleSignin.configure({
@@ -40,21 +41,28 @@ const BaseLayout = () => {
   }
 
   return (
-    <Stack
-      screenOptions={{
-        headerShadowVisible: false,
-        headerShown: false,
-        headerTitle: (props) => (
-          <Text className="font-poppins-semibold600 text-xl px-7">
-            {props.children}
-          </Text>
-        ),
-        navigationBarColor: "#fff",
-        headerStyle: {
-          backgroundColor: "#fff",
-        },
-      }}
-    />
+    <View className="flex-1">
+      <Stack
+        screenOptions={{
+          headerShadowVisible: false,
+          headerShown: false,
+          headerTitle: (props) => (
+            <Text className="font-poppins-semibold600 text-xl px-7">
+              {props.children}
+            </Text>
+          ),
+          navigationBarColor: "#fff",
+          headerStyle: {
+            backgroundColor: "#fff",
+          },
+        }}
+      />
+      <FlashMessage
+        position="top"
+        titleStyle={{ fontSize: 14, fontFamily: "Poppins_500Medium" }}
+        hideStatusBar
+      />
+    </View>
   );
 };
 

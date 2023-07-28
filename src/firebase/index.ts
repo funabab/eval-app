@@ -14,6 +14,7 @@ import {
   FIREBASE_PROJECT_ID,
   FIREBASE_STORAGE_BUCKET,
 } from "@env";
+import { getFunctions } from "firebase/functions";
 
 export const firebaseConfig = {
   apiKey: FIREBASE_API_KEY,
@@ -26,6 +27,7 @@ export const firebaseConfig = {
 
 export const firebaseApp = initializeApp(firebaseConfig);
 export const firebaseAuth = getAuth(firebaseApp);
+export const firebaseFunction = getFunctions(firebaseApp);
 
 export const signInWithGoogle = async () => {
   const payload = await GoogleSignin.signIn();
