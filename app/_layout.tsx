@@ -10,8 +10,14 @@ import {
   Poppins_600SemiBold_Italic,
 } from "@expo-google-fonts/poppins";
 import { Text } from "react-native";
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
+import { FIREBASE_GOOGLE_AUTH_WEB_CLIENT_Id } from "@env";
 
 SplashScreen.preventAutoHideAsync();
+GoogleSignin.configure({
+  webClientId: FIREBASE_GOOGLE_AUTH_WEB_CLIENT_Id,
+  offlineAccess: true,
+});
 
 const BaseLayout = () => {
   const [fontsLoaded] = useFonts({

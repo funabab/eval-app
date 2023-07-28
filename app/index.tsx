@@ -1,12 +1,14 @@
 import { Link, Stack, useRouter } from "expo-router";
 import IconLoginUser from "../src/components/icons/IconLoginUser";
-import { Button, ScrollView, Text, View } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 import FormControl from "../src/components/FormControl";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import IconLoginGoogle from "../src/components/icons/IconLoginGoogle";
+import { signInWithGoogle } from "../src/firebase";
 
 export const LoginScreen = () => {
   const router = useRouter();
+
   return (
     <View className="flex-1 bg-white">
       <Stack.Screen
@@ -57,7 +59,7 @@ export const LoginScreen = () => {
               or
             </Text>
 
-            <TouchableOpacity onPress={() => router.push("/dashboard")}>
+            <TouchableOpacity onPress={() => signInWithGoogle()}>
               <View className="w-full flex flex-row items-center py-3 px-2 rounded-xl justify-center border-2 border-black">
                 <IconLoginGoogle />
                 <Text className="font-poppins-semibold600 text-black text-sm text-center ml-4">
