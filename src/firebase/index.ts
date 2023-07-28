@@ -34,3 +34,8 @@ export const signInWithGoogle = async () => {
   const credential = GoogleAuthProvider.credential(payload.idToken);
   await signInWithCredential(firebaseAuth, credential);
 };
+
+export const firebaseErrors: Record<string, string> = {
+  "auth/wrong-password": "Email or password is incorrect",
+  "auth/user-not-found": "Email or password is incorrect",
+};

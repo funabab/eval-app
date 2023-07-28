@@ -1,13 +1,15 @@
 import clsx from "clsx";
 import React from "react";
 import { Text, TextInput, TextInputProps, View } from "react-native";
-import { boolean } from "zod";
 
-interface Props extends TextInputProps {
+export interface FormControlInputProps extends TextInputProps {
   errorMessage?: string;
 }
 
-const FormControlInput: React.FC<Props> = ({ errorMessage, ...props }) => {
+const FormControlInput: React.FC<FormControlInputProps> = ({
+  errorMessage,
+  ...props
+}) => {
   const hasError = Boolean(errorMessage);
   return (
     <View>

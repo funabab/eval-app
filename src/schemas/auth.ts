@@ -39,4 +39,12 @@ export const registerAccountBodySchema = z
     path: ["confirmPassword"],
   });
 
+export const loginAccountBodySchema = z.object({
+  email: z
+    .string({ required_error: "Email is required" })
+    .email("Invalid email"),
+  password: z.string({ required_error: "Password is required" }),
+});
+
 export type RegisterAccountBody = z.infer<typeof registerAccountBodySchema>;
+export type LoginAccountBody = z.infer<typeof loginAccountBodySchema>;

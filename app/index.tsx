@@ -4,10 +4,42 @@ import { ScrollView, Text, View } from "react-native";
 import FormControl from "../src/components/FormControl";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import IconLoginGoogle from "../src/components/icons/IconLoginGoogle";
-import { signInWithGoogle } from "../src/firebase";
+import {
+  firebaseAuth,
+  firebaseErrors,
+  signInWithGoogle,
+} from "../src/firebase";
+import { Controller, useForm } from "react-hook-form";
+import { LoginAccountBody, loginAccountBodySchema } from "../src/schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import clsx from "clsx";
+import { useEffect } from "react";
+import { showMessage } from "react-native-flash-message";
 
 export const LoginScreen = () => {
   const router = useRouter();
+  const { control, handleSubmit } = useForm<LoginAccountBody>({
+    resolver: zodResolver(loginAccountBodySchema),
+  });
+  const [login, user, isLoading, error] =
+    useSignInWithEmailAndPassword(firebaseAuth);
+
+  useEffect(() => {
+    if (error) {
+      showMessage({
+        type: "danger",
+        message: "Error",
+        description: firebaseErrors[error.code],
+      });
+    }
+  }, [error]);
+
+  const onSubmit = handleSubmit((data: LoginAccountBody) => {
+    login(data.email, data.password).catch((e) => {
+      console.error(e);
+    });
+  });
 
   return (
     <View className="flex-1 bg-white">
@@ -27,26 +59,55 @@ export const LoginScreen = () => {
           <View className="px-7 w-full mt-7">
             <View className="space-y-6">
               <View>
-                <FormControl
-                  label="Enter Email Address"
-                  keyboardType="email-address"
-                  textContentType="emailAddress"
-                  placeholder="Email address"
+                <Controller
+                  control={control}
+                  name="email"
+                  render={({
+                    field: { onBlur, onChange, value },
+                    fieldState: { error },
+                  }) => (
+                    <FormControl
+                      label="Enter Email Address"
+                      keyboardType="email-address"
+                      textContentType="emailAddress"
+                      placeholder="Email address"
+                      onBlur={onBlur}
+                      onChangeText={onChange}
+                      value={value}
+                      errorMessage={error?.message}
+                    />
+                  )}
                 />
               </View>
 
               <View>
-                <FormControl
-                  label="Input Password"
-                  textContentType="newPassword"
-                  placeholder="password"
-                  secureTextEntry
+                <Controller
+                  control={control}
+                  name="password"
+                  render={({
+                    field: { onBlur, onChange, value },
+                    fieldState: { error },
+                  }) => (
+                    <FormControl
+                      label="Input Password"
+                      textContentType="newPassword"
+                      placeholder="password"
+                      onBlur={onBlur}
+                      onChangeText={onChange}
+                      value={value}
+                      errorMessage={error?.message}
+                      secureTextEntry
+                    />
+                  )}
                 />
               </View>
             </View>
             <TouchableOpacity
-              className="mt-10"
-              onPress={() => router.push("/dashboard")}
+              className={clsx("mt-10", {
+                "opacity-40": isLoading,
+              })}
+              disabled={isLoading}
+              onPress={() => onSubmit()}
             >
               <View className="w-full bg-black py-4 px-2 rounded-xl">
                 <Text className="font-poppins-semibold600 text-white text-sm text-center">

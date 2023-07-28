@@ -1,8 +1,8 @@
 import React from "react";
-import { Text, View, TextInput, TextInputProps } from "react-native";
-import FormControlInput from "./FormControlInput";
+import { Text, View } from "react-native";
+import FormControlInput, { FormControlInputProps } from "./FormControlInput";
 
-interface Props extends TextInputProps {
+interface Props extends FormControlInputProps {
   label: string;
 }
 
