@@ -5,6 +5,7 @@ import { getAuth } from "firebase-admin/auth";
 import { registerAccountBodySchema } from "../../src/schemas";
 import { FirebaseError } from "@firebase/util";
 import { ZodError } from "zod";
+import { auth } from "firebase-functions";
 
 initializeApp();
 
@@ -48,4 +49,18 @@ export const registerAccount = onCall({ maxInstances: 10 }, async (request) => {
       }
     }
   }
+});
+
+export const handleOnCreateUser = auth.user().onCreate(async (user) => {
+  const firestore = getFirestore();
+
+  await firestore.doc(`users/${user.uid}`).set(
+    {
+      ...JSON.parse(JSON.stringify(user)),
+      id: user.uid,
+    },
+    {
+      merge: true,
+    }
+  );
 });

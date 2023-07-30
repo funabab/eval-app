@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Tabs } from "expo-router/tabs";
 import IconTabProfile from "../../src/components/icons/IconTabProfile";
 import IconTabEvaluation from "../../src/components/icons/IconTabEvaluation";
@@ -8,9 +8,18 @@ import IconDashboardUser from "../../src/components/icons/IconDashboardUser";
 import IconTabNotification from "../../src/components/icons/IconTabNotification";
 import IconTabHome from "../../src/components/icons/IconTabHome";
 import { useRouter } from "expo-router";
+import { useUser } from "../../src/hooks/useUser";
 
 const DashboardLayout = () => {
+  const { user, isLoading } = useUser();
   const router = useRouter();
+
+  useEffect(() => {
+    if (!isLoading && !user) {
+      router.replace("/");
+    }
+  }, [user, isLoading]);
+
   return (
     <Tabs
       screenOptions={{

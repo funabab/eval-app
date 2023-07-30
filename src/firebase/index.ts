@@ -15,6 +15,7 @@ import {
   FIREBASE_STORAGE_BUCKET,
 } from "@env";
 import { getFunctions } from "firebase/functions";
+import { getFirestore } from "firebase/firestore";
 
 export const firebaseConfig = {
   apiKey: FIREBASE_API_KEY,
@@ -27,6 +28,7 @@ export const firebaseConfig = {
 
 export const firebaseApp = initializeApp(firebaseConfig);
 export const firebaseAuth = getAuth(firebaseApp);
+export const firebaseFirestore = getFirestore(firebaseApp);
 export const firebaseFunction = getFunctions(firebaseApp);
 
 export const signInWithGoogle = async () => {

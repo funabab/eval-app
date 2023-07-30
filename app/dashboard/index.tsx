@@ -16,11 +16,13 @@ import IconDashboardAbout from "../../src/components/icons/IconDashboardAbout";
 import IconDashboardNotification from "../../src/components/icons/IconDashboardNotification";
 import IconDashboardTimetable from "../../src/components/icons/IconDashboardTimetable";
 import IconDashboardExit from "../../src/components/icons/IconDashboardExit";
+import { useUser } from "../../src/hooks/useUser";
 
 interface Props {}
 
 const DashboardHome: React.FC<Props> = () => {
   const router = useRouter();
+  const { user } = useUser();
   return (
     <View className="flex-1 bg-white">
       <ScrollView className="flex-1 px-5">
@@ -28,7 +30,7 @@ const DashboardHome: React.FC<Props> = () => {
           <View className="flex flex-row justify-between px-4">
             <View>
               <Text className="font-poppins-semibold600 text-base text-black">
-                Hi Chris
+                Hi {user?.displayName}
               </Text>
               <Text className="text-xs font-poppins-medium500 text-black">
                 Good Morning
