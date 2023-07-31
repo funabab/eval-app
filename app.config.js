@@ -33,6 +33,15 @@ export default {
         projectId: "dce73dfa-94dd-494f-80fc-012f5fe18cc8",
       },
     },
-    plugins: ["@react-native-google-signin/google-signin"],
+    plugins: [
+      "@react-native-google-signin/google-signin",
+      [
+        "expo-location",
+        {
+          locationAlwaysAndWhenInUsePermission:
+            "Allow Eval App to use your location.",
+        },
+      ],
+    ],
   },
 };

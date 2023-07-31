@@ -22,6 +22,7 @@ import { useCollectionData } from "react-firebase-hooks/firestore";
 import { Timestamp, collection, limit, query } from "firebase/firestore";
 import { firebaseFirestore } from "../../src/firebase";
 import Loader from "../../src/components/Loader";
+import LocationProtect from "../../src/components/LocationProtect";
 
 interface Props {}
 
@@ -56,96 +57,98 @@ const DashboardHome: React.FC<Props> = () => {
   };
 
   return (
-    <View className="flex-1 bg-white">
-      <ScrollView className="flex-1 px-5">
-        <View className="flex-1 justify-center mt-16">
-          <View className="flex flex-row justify-between px-4">
-            <View>
-              <Text className="font-poppins-semibold600 text-base text-black">
-                Hi {user?.displayName}
-              </Text>
-              <Text className="text-xs font-poppins-medium500 text-black">
-                Good {dayPeriod}
-              </Text>
-            </View>
-            <IconDashboardUser />
-          </View>
-
-          <View className="bg-[#D9D9D9] px-7 py-5 mt-6 rounded-lg">
-            <Text className="text-xs font-poppins-medium500">
-              {latestBroadcast.message}
-            </Text>
-            <View className="mt-[30px] flex flex-row gap-x-1 justify-center">
-              <MaterialCommunityIcons name="clock" size={16} color="black" />
-              <Text className="text-xs">
-                Posted:{" "}
-                {dayjs(latestBroadcast.createdAt.toDate()).format(
-                  "DD MMMM YYYY"
-                )}
-              </Text>
-            </View>
-          </View>
-
-          <View className="mt-12">
-            <Text className="ml-4 font-poppins-semibold600 text-base">
-              Quick Actions
-            </Text>
-
-            <View className="flex flex-row justify-between mt-10">
-              <TouchableOpacity
-                onPress={() => router.push("/dashboard/profile")}
-              >
-                <View className="flex">
-                  <IconDashboardProfile />
-                  <Text className="text-center">Profile</Text>
-                </View>
-              </TouchableOpacity>
-
-              <TouchableOpacity>
-                <View className="flex">
-                  <IconDashboardEvaluation />
-                  <Text className="text-center">Evalutation</Text>
-                </View>
-              </TouchableOpacity>
-
-              <TouchableOpacity onPress={() => router.push("/about")}>
-                <View className="flex">
-                  <IconDashboardAbout />
-                  <Text className="text-center">About</Text>
-                </View>
-              </TouchableOpacity>
+    <LocationProtect>
+      <View className="flex-1 bg-white">
+        <ScrollView className="flex-1 px-5">
+          <View className="flex-1 justify-center mt-16">
+            <View className="flex flex-row justify-between px-4">
+              <View>
+                <Text className="font-poppins-semibold600 text-base text-black">
+                  Hi {user?.displayName}
+                </Text>
+                <Text className="text-xs font-poppins-medium500 text-black">
+                  Good {dayPeriod}
+                </Text>
+              </View>
+              <IconDashboardUser />
             </View>
 
-            <View className="flex flex-row justify-between mt-10">
-              <TouchableOpacity
-                onPress={() => router.push("/dashboard/notification")}
-              >
-                <View className="flex">
-                  <IconDashboardNotification />
-                  <Text className="text-center">Notification</Text>
-                </View>
-              </TouchableOpacity>
+            <View className="bg-[#D9D9D9] px-7 py-5 mt-6 rounded-lg">
+              <Text className="text-xs font-poppins-medium500">
+                {latestBroadcast.message}
+              </Text>
+              <View className="mt-[30px] flex flex-row gap-x-1 justify-center">
+                <MaterialCommunityIcons name="clock" size={16} color="black" />
+                <Text className="text-xs">
+                  Posted:{" "}
+                  {dayjs(latestBroadcast.createdAt.toDate()).format(
+                    "DD MMMM YYYY"
+                  )}
+                </Text>
+              </View>
+            </View>
 
-              <TouchableOpacity>
-                <View className="flex">
-                  <IconDashboardTimetable />
-                  <Text className="text-center">Time Table</Text>
-                </View>
-              </TouchableOpacity>
+            <View className="mt-12">
+              <Text className="ml-4 font-poppins-semibold600 text-base">
+                Quick Actions
+              </Text>
 
-              {Platform.OS === "android" && (
-                <TouchableOpacity onPress={() => BackHandler.exitApp()}>
+              <View className="flex flex-row justify-between mt-10">
+                <TouchableOpacity
+                  onPress={() => router.push("/dashboard/profile")}
+                >
                   <View className="flex">
-                    <IconDashboardExit />
-                    <Text className="text-center">Exit</Text>
+                    <IconDashboardProfile />
+                    <Text className="text-center">Profile</Text>
                   </View>
                 </TouchableOpacity>
-              )}
+
+                <TouchableOpacity>
+                  <View className="flex">
+                    <IconDashboardEvaluation />
+                    <Text className="text-center">Evalutation</Text>
+                  </View>
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={() => router.push("/about")}>
+                  <View className="flex">
+                    <IconDashboardAbout />
+                    <Text className="text-center">About</Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+
+              <View className="flex flex-row justify-between mt-10">
+                <TouchableOpacity
+                  onPress={() => router.push("/dashboard/notification")}
+                >
+                  <View className="flex">
+                    <IconDashboardNotification />
+                    <Text className="text-center">Notification</Text>
+                  </View>
+                </TouchableOpacity>
+
+                <TouchableOpacity>
+                  <View className="flex">
+                    <IconDashboardTimetable />
+                    <Text className="text-center">Time Table</Text>
+                  </View>
+                </TouchableOpacity>
+
+                {Platform.OS === "android" && (
+                  <TouchableOpacity onPress={() => BackHandler.exitApp()}>
+                    <View className="flex">
+                      <IconDashboardExit />
+                      <Text className="text-center">Exit</Text>
+                    </View>
+                  </TouchableOpacity>
+                )}
+              </View>
             </View>
           </View>
-        </View>
-      </ScrollView>
-    </View>
+        </ScrollView>
+      </View>
+    </LocationProtect>
   );
 };
 
