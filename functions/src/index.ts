@@ -8,7 +8,7 @@ import { ZodError } from "zod";
 import { auth } from "firebase-functions";
 import * as canvas from "canvas";
 import * as faceapi from "face-api.js";
-import { PineconeClient } from "@pinecone-database/pinecone";
+import { PineconeClient, ScoredVector } from "@pinecone-database/pinecone";
 
 initializeApp();
 
@@ -162,6 +162,84 @@ export const registerUserFace = onCall(
     return {
       success: true,
       message: "Face registered successfully",
+    };
+  }
+);
+
+export const verifyUserFace = onCall(
+  { maxInstances: 10, memory: "512MiB" },
+  async (request) => {
+    if (!request.auth) {
+      throw new HttpsError("unauthenticated", "Unauthenticated");
+    }
+
+    const imageBase64: string = request.data;
+
+    if (!imageBase64) {
+      throw new HttpsError("invalid-argument", "Invalid arguments");
+    }
+
+    await faceapi.nets.ssdMobilenetv1.loadFromDisk("./models");
+    await faceapi.nets.faceLandmark68Net.loadFromDisk("./models");
+    await faceapi.nets.faceRecognitionNet.loadFromDisk("./models");
+
+    const { Canvas, Image, ImageData } = canvas;
+    faceapi.env.monkeyPatch({
+      Canvas,
+      Image,
+      ImageData,
+    } as unknown as faceapi.Environment);
+
+    const input = (await canvas.loadImage(
+      `data:image/jpg;base64,${imageBase64}`
+    )) as unknown as HTMLImageElement;
+
+    const result = await faceapi
+      .detectSingleFace(input)
+      .withFaceLandmarks()
+      .withFaceDescriptor();
+
+    if (!result) {
+      throw new HttpsError("not-found", "No face found");
+    }
+
+    const pinecone = new PineconeClient();
+    await pinecone.init({
+      apiKey: process.env.PINECONE_API_KEY as string,
+      environment: process.env.PINECONE_API_ENV as string,
+    });
+
+    const uid = request.auth.uid;
+    const embedding = Array.from(result.descriptor);
+
+    // eslint-disable-next-line new-cap
+    const index = await pinecone.Index(
+      process.env.PINECONE_API_FACE_RECOGNITION_INDEX as string
+    );
+    const { matches } = await index.query({
+      queryRequest: {
+        topK: 1,
+        vector: embedding,
+      },
+    });
+
+    const THRESHOLD = 0.9;
+
+    if (
+      !matches ||
+      matches.length === 0 ||
+      !(
+        matches[0].score &&
+        matches[0].score >= THRESHOLD &&
+        matches[0].id === uid
+      )
+    ) {
+      throw new HttpsError("not-found", "No face found");
+    }
+
+    return {
+      success: true,
+      message: "Face verified successfully",
     };
   }
 );

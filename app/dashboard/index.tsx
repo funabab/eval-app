@@ -103,7 +103,9 @@ const DashboardHome: React.FC<Props> = () => {
                   </View>
                 </TouchableOpacity>
 
-                <TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => router.push("/dashboard/evaluation")}
+                >
                   <View className="flex">
                     <IconDashboardEvaluation />
                     <Text className="text-center">Evalutation</Text>

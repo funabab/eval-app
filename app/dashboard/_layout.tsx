@@ -69,9 +69,9 @@ const DashboardLayout = () => {
       />
 
       <Tabs.Screen
-        name="courses/index"
+        name="evaluation/index"
         options={{
-          title: "Courses",
+          title: "Evaluation",
           headerTitleStyle: {
             fontFamily: "Poppins_600SemiBold",
             fontSize: 24,
@@ -81,15 +81,6 @@ const DashboardLayout = () => {
           headerLeft: () => (
             <TouchableOpacity className="px-2" onPress={() => router.back()}>
               <AntDesign name="left" size={20} color="black" />
-            </TouchableOpacity>
-          ),
-          headerRight: () => (
-            <TouchableOpacity className="px-2">
-              <IconDashboardUser
-                width={24}
-                height={24}
-                onPress={() => router.push("/dashboard/profile")}
-              />
             </TouchableOpacity>
           ),
         }}
@@ -119,6 +110,13 @@ const DashboardLayout = () => {
 
       <Tabs.Screen
         name="courses/edit/index"
+        options={{
+          href: null,
+        }}
+      />
+
+      <Tabs.Screen
+        name="courses/index"
         options={{
           href: null,
         }}
