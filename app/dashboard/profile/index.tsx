@@ -34,7 +34,20 @@ const DashboardProfileScreen = () => {
               <TouchableOpacity
                 className="mt-8 mx-3"
                 onPress={() => {
-                  logout();
+                  switch (item.item) {
+                    case "Log out":
+                      logout();
+                      break;
+                    case "Courses":
+                      router.push("/dashboard/courses");
+                      break;
+                    case "Evaluation":
+                      router.push("/dashboard/evaluation");
+                      break;
+                    case "Profile":
+                      router.push("/dashboard/profile");
+                      break;
+                  }
                 }}
               >
                 <Text
