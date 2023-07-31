@@ -16,37 +16,39 @@ const DashboardProfileScreen = () => {
   const [logout] = useSignOut(firebaseAuth);
 
   return (
-    <SafeAreaView className="flex-1 justify-center bg-white">
-      <View className="flex-1 mt-10">
-        <View className="flex items-center">
-          <IconDashboardUser height={102} width={102} />
-          <Text className="text-[32px] font-poppins-medium500 mt-[18px]">
-            {user?.displayName}
-          </Text>
-          <Text className="text-xl">{user?.department}</Text>
-        </View>
+    <LocationProtect>
+      <SafeAreaView className="flex-1 justify-center bg-white">
+        <View className="flex-1 mt-10">
+          <View className="flex items-center">
+            <IconDashboardUser height={102} width={102} />
+            <Text className="text-[32px] font-poppins-medium500 mt-[18px]">
+              {user?.displayName}
+            </Text>
+            <Text className="text-xl">{user?.department}</Text>
+          </View>
 
-        <FlatList
-          data={MENU_ITEMS}
-          renderItem={(item) => (
-            <TouchableOpacity
-              className="mt-8 mx-3"
-              onPress={() => {
-                logout();
-              }}
-            >
-              <Text
-                className={clsx("border-black text-2xl pl-12 pb-2", {
-                  "border-b-2": item.index < MENU_ITEMS.length - 1,
-                })}
+          <FlatList
+            data={MENU_ITEMS}
+            renderItem={(item) => (
+              <TouchableOpacity
+                className="mt-8 mx-3"
+                onPress={() => {
+                  logout();
+                }}
               >
-                {item.item}
-              </Text>
-            </TouchableOpacity>
-          )}
-        />
-      </View>
-    </SafeAreaView>
+                <Text
+                  className={clsx("border-black text-2xl pl-12 pb-2", {
+                    "border-b-2": item.index < MENU_ITEMS.length - 1,
+                  })}
+                >
+                  {item.item}
+                </Text>
+              </TouchableOpacity>
+            )}
+          />
+        </View>
+      </SafeAreaView>
+    </LocationProtect>
   );
 };
 

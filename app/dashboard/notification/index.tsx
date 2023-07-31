@@ -6,6 +6,7 @@ import { Timestamp, collection } from "firebase/firestore";
 import { firebaseFirestore } from "../../../src/firebase";
 import Loader from "../../../src/components/Loader";
 import dayjs from "dayjs";
+import LocationProtect from "../../../src/components/LocationProtect";
 
 const NotificationScreen = () => {
   const router = useRouter();
@@ -38,31 +39,33 @@ const NotificationScreen = () => {
   }
 
   return (
-    <View className="flex-1 bg-white">
-      <View className="px-4 mt-10">
-        <FlatList
-          data={allBroadcasts}
-          renderItem={({ item }) => (
-            <TouchableOpacity>
-              <View className="rounded-lg bg-[#000000e3] text-white px-8 py-3 mb-6">
-                <Text className="text-sm font-poppins-medium500 text-white">
-                  {item.title}
-                </Text>
-                <View className="justify-between flex-row mt-3">
-                  <Text className="text-sm font-poppins-light300 text-white">
-                    {item.date}
+    <LocationProtect>
+      <View className="flex-1 bg-white">
+        <View className="px-4 mt-10">
+          <FlatList
+            data={allBroadcasts}
+            renderItem={({ item }) => (
+              <TouchableOpacity>
+                <View className="rounded-lg bg-[#000000e3] text-white px-8 py-3 mb-6">
+                  <Text className="text-sm font-poppins-medium500 text-white">
+                    {item.title}
                   </Text>
+                  <View className="justify-between flex-row mt-3">
+                    <Text className="text-sm font-poppins-light300 text-white">
+                      {item.date}
+                    </Text>
 
-                  <Text className="text-sm font-poppins-light300 text-white">
-                    {item.time}
-                  </Text>
+                    <Text className="text-sm font-poppins-light300 text-white">
+                      {item.time}
+                    </Text>
+                  </View>
                 </View>
-              </View>
-            </TouchableOpacity>
-          )}
-        />
+              </TouchableOpacity>
+            )}
+          />
+        </View>
       </View>
-    </View>
+    </LocationProtect>
   );
 };
 
