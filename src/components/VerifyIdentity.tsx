@@ -72,12 +72,16 @@ const VerifyIdentity: React.FC<Props> = ({ onVerify }) => {
           const response = await verifyFace(mainpulatedImage.base64);
 
           if (response) {
-            showMessage({
-              type: "success",
-              message: "Success",
-              description: "Face verified successfully",
-            });
-            onVerify();
+            if (response) {
+              showMessage({
+                type: "success",
+                message: "Success",
+                description: "Face verified successfully",
+              });
+              onVerify();
+            } else {
+              setVerifyState("no-detection");
+            }
           } else {
             setVerifyState("no-detection");
           }
@@ -110,7 +114,7 @@ const VerifyIdentity: React.FC<Props> = ({ onVerify }) => {
 
         <Text className="text-center my-5 font-poppins-medium500">
           {verifyState === "detecting" && "Verifying face.."}
-          {verifyState === "no-detection" && "No Face Detected"}
+          {verifyState === "no-detection" && "Not verified"}
         </Text>
       </View>
 

@@ -8,7 +8,7 @@ import { ZodError } from "zod";
 import { auth } from "firebase-functions";
 import * as canvas from "canvas";
 import * as faceapi from "face-api.js";
-import { PineconeClient, ScoredVector } from "@pinecone-database/pinecone";
+import { PineconeClient } from "@pinecone-database/pinecone";
 
 initializeApp();
 

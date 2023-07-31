@@ -29,7 +29,7 @@ const AuthRedirect: React.FC<React.PropsWithChildren<Props>> = ({
     return () => {
       navigate.removeListener("focus", onFocus);
     };
-  }, [redirectTo, isLoading, user, user?.uid]);
+  }, [redirectTo, isLoading, user]);
 
   if (isLoading || user) {
     return <Loader />;

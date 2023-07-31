@@ -112,6 +112,21 @@ const DashboardLayout = () => {
         name="courses/edit/index"
         options={{
           href: null,
+          headerShown: true,
+          title: "Edit Course",
+          headerTitleAlign: "center",
+          headerTitleStyle: {
+            fontFamily: "Poppins_600SemiBold",
+            fontWeight: "600",
+          },
+          headerLeft: () => (
+            <TouchableOpacity
+              className="px-4"
+              onPress={() => navigate.goBack()}
+            >
+              <AntDesign name="left" size={20} color="black" />
+            </TouchableOpacity>
+          ),
         }}
       />
 
@@ -119,6 +134,21 @@ const DashboardLayout = () => {
         name="courses/index"
         options={{
           href: null,
+          headerShown: true,
+          title: "Courses",
+          headerTitleAlign: "center",
+          headerTitleStyle: {
+            fontFamily: "Poppins_600SemiBold",
+            fontWeight: "600",
+          },
+          headerLeft: () => (
+            <TouchableOpacity
+              className="px-4"
+              onPress={() => navigate.goBack()}
+            >
+              <AntDesign name="left" size={20} color="black" />
+            </TouchableOpacity>
+          ),
         }}
       />
     </Tabs>
