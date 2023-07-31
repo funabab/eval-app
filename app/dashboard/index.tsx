@@ -18,7 +18,7 @@ import IconDashboardTimetable from "../../src/components/icons/IconDashboardTime
 import IconDashboardExit from "../../src/components/icons/IconDashboardExit";
 import { useUser } from "../../src/hooks/useUser";
 import dayjs from "dayjs";
-import { useCollectionDataOnce } from "react-firebase-hooks/firestore";
+import { useCollectionData } from "react-firebase-hooks/firestore";
 import { Timestamp, collection, limit, query } from "firebase/firestore";
 import { firebaseFirestore } from "../../src/firebase";
 import Loader from "../../src/components/Loader";
@@ -28,7 +28,7 @@ interface Props {}
 const DashboardHome: React.FC<Props> = () => {
   const router = useRouter();
   const { user } = useUser();
-  const [broadcast, isLoadingBroadcast] = useCollectionDataOnce(
+  const [broadcast, isLoadingBroadcast] = useCollectionData(
     query(collection(firebaseFirestore, "broadcasts"), limit(1))
   );
 
@@ -117,7 +117,9 @@ const DashboardHome: React.FC<Props> = () => {
             </View>
 
             <View className="flex flex-row justify-between mt-10">
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => router.push("/dashboard/notification")}
+              >
                 <View className="flex">
                   <IconDashboardNotification />
                   <Text className="text-center">Notification</Text>

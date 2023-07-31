@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { SplashScreen, Stack } from "expo-router";
 import {
   useFonts,
@@ -14,6 +14,7 @@ import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { FIREBASE_GOOGLE_AUTH_WEB_CLIENT_Id } from "@env";
 import FlashMessage from "react-native-flash-message";
 import { useUser } from "../src/hooks/useUser";
+import Loader from "../src/components/Loader";
 
 SplashScreen.preventAutoHideAsync();
 GoogleSignin.configure({
@@ -33,18 +34,23 @@ const BaseLayout = () => {
   const { isLoading } = useUser();
 
   const onLayout = useCallback(async () => {
-    if (fontsLoaded && !isLoading) {
+    if (fontsLoaded) {
       await SplashScreen.hideAsync();
     }
-  }, [fontsLoaded, isLoading]);
+  }, [fontsLoaded]);
 
-  if (!fontsLoaded || isLoading) {
+  if (!fontsLoaded) {
     return null;
+  }
+
+  if (isLoading) {
+    return <Loader />;
   }
 
   return (
     <View className="flex-1" onLayout={onLayout}>
       <Stack
+        id="root"
         screenOptions={{
           headerShadowVisible: false,
           headerShown: false,

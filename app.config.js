@@ -1,6 +1,6 @@
 export default {
   expo: {
-    name: "eval-app",
+    name: "Eval",
     slug: "eval-app",
     scheme: "evalapp",
     version: "1.0.0",

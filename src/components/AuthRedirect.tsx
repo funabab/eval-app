@@ -1,7 +1,8 @@
 import { useEffect } from "react";
-import { useRouter } from "expo-router";
+import { useNavigation, useRouter } from "expo-router";
 import { useUser } from "../hooks/useUser";
-import { User } from "../schemas";
+import Loader from "./Loader";
+import { Text } from "react-native";
 
 interface Props {
   redirectTo?: string;
@@ -13,15 +14,25 @@ const AuthRedirect: React.FC<React.PropsWithChildren<Props>> = ({
 }) => {
   const { user, isLoading } = useUser();
   const router = useRouter();
+  const navigate = useNavigation();
 
   useEffect(() => {
-    if (!isLoading && user) {
-      router.push(redirectTo);
-    }
+    const onFocus = () => {
+      if (!isLoading && user) {
+        router.push(redirectTo);
+      }
+    };
+
+    navigate.addListener("focus", onFocus);
+    onFocus();
+
+    return () => {
+      navigate.removeListener("focus", onFocus);
+    };
   }, [redirectTo, isLoading, user]);
 
   if (isLoading || user) {
-    return null;
+    return <Loader />;
   }
 
   return <>{children}</>;

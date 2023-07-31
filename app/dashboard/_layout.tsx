@@ -7,7 +7,7 @@ import { AntDesign } from "@expo/vector-icons";
 import IconDashboardUser from "../../src/components/icons/IconDashboardUser";
 import IconTabNotification from "../../src/components/icons/IconTabNotification";
 import IconTabHome from "../../src/components/icons/IconTabHome";
-import { useRouter } from "expo-router";
+import { useNavigation, useRouter } from "expo-router";
 import { useUser } from "../../src/hooks/useUser";
 import { User } from "../../src/schemas";
 
@@ -22,6 +22,7 @@ const checkFaceRecognitionRegistration = (user: User) => {
 const DashboardLayout = () => {
   const { user, isLoading } = useUser();
   const router = useRouter();
+  const navigate = useNavigation();
 
   useEffect(() => {
     if (!isLoading && !user) {
@@ -42,6 +43,7 @@ const DashboardLayout = () => {
 
   return (
     <Tabs
+      id="dashboard"
       screenOptions={{
         tabBarShowLabel: false,
         tabBarActiveTintColor: "#000",
@@ -104,7 +106,10 @@ const DashboardLayout = () => {
             fontWeight: "600",
           },
           headerLeft: () => (
-            <TouchableOpacity className="px-4" onPress={() => router.back()}>
+            <TouchableOpacity
+              className="px-4"
+              onPress={() => navigate.goBack()}
+            >
               <AntDesign name="left" size={20} color="black" />
             </TouchableOpacity>
           ),

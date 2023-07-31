@@ -16,6 +16,7 @@ import { showMessage } from "react-native-flash-message";
 import { useHttpsCallable } from "react-firebase-hooks/functions";
 import { firebaseFunction, signInWithGoogle } from "../src/firebase";
 import clsx from "clsx";
+import AuthRedirect from "../src/components/AuthRedirect";
 
 const RegitserScreen = () => {
   const { control, handleSubmit } = useForm<RegisterAccountBody>({
@@ -56,207 +57,209 @@ const RegitserScreen = () => {
   });
 
   return (
-    <View className="flex-1 bg-white">
-      <Stack.Screen
-        options={{
-          title: "Sign Up",
-          headerBackVisible: false,
-          headerShown: true,
-        }}
-      />
-      <ScrollView className="flex-1">
-        <Text className="text-center font-poppins-semiboldItalic600">
-          Please fill out every into
-        </Text>
-        <View className="flex-1 items-center justify-center pt-2 pb-20 px-7">
-          <View className="space-y-4 w-full">
-            <View>
-              <Controller
-                control={control}
-                name="fullName"
-                render={({
-                  field: { onBlur, onChange, value },
-                  fieldState: { error },
-                }) => (
-                  <FormControlInput
-                    placeholder="Full Name"
-                    textContentType="name"
-                    onBlur={onBlur}
-                    onChangeText={onChange}
-                    value={value}
-                    errorMessage={error?.message}
-                  />
-                )}
-              />
-            </View>
-
-            <View>
-              <Controller
-                control={control}
-                name="matricNumber"
-                render={({
-                  field: { onBlur, onChange, value },
-                  fieldState: { error },
-                }) => (
-                  <FormControlInput
-                    placeholder="Matric Number"
-                    onBlur={onBlur}
-                    onChangeText={onChange}
-                    value={value}
-                    errorMessage={error?.message}
-                  />
-                )}
-              />
-            </View>
-
-            <View>
-              <Controller
-                control={control}
-                name="department"
-                render={({
-                  field: { onBlur, onChange, value },
-                  fieldState: { error },
-                }) => (
-                  <FormControlInput
-                    placeholder="Department"
-                    onBlur={onBlur}
-                    onChangeText={onChange}
-                    value={value}
-                    errorMessage={error?.message}
-                  />
-                )}
-              />
-            </View>
-
-            <View>
-              <Controller
-                control={control}
-                name="phoneNumber"
-                defaultValue="+234"
-                render={({
-                  field: { onBlur, onChange, value },
-                  fieldState: { error },
-                }) => (
-                  <FormControlInput
-                    placeholder="Phone Number"
-                    textContentType="telephoneNumber"
-                    onBlur={onBlur}
-                    onChangeText={onChange}
-                    value={value}
-                    errorMessage={error?.message}
-                  />
-                )}
-              />
-            </View>
-
-            <View>
-              <Controller
-                control={control}
-                name="email"
-                render={({
-                  field: { onBlur, onChange, value },
-                  fieldState: { error },
-                }) => (
-                  <FormControlInput
-                    placeholder="Email"
-                    textContentType="emailAddress"
-                    onBlur={onBlur}
-                    onChangeText={onChange}
-                    value={value}
-                    errorMessage={error?.message}
-                  />
-                )}
-              />
-            </View>
-
-            <View>
-              <Controller
-                control={control}
-                name="password"
-                render={({
-                  field: { onBlur, onChange, value },
-                  fieldState: { error },
-                }) => (
-                  <FormControlInput
-                    placeholder="Enter Password"
-                    textContentType="newPassword"
-                    onBlur={onBlur}
-                    onChangeText={onChange}
-                    value={value}
-                    errorMessage={error?.message}
-                    secureTextEntry
-                  />
-                )}
-              />
-            </View>
-
-            <View>
-              <Controller
-                control={control}
-                name="confirmPassword"
-                render={({
-                  field: { onBlur, onChange, value },
-                  fieldState: { error },
-                }) => (
-                  <FormControlInput
-                    placeholder="Confirm Password"
-                    textContentType="newPassword"
-                    onBlur={onBlur}
-                    onChangeText={onChange}
-                    value={value}
-                    errorMessage={error?.message}
-                    secureTextEntry
-                  />
-                )}
-              />
-            </View>
-
-            <View>
-              <TouchableOpacity
-                className={clsx("mt-2", {
-                  "opacity-60": isLoading,
-                })}
-                disabled={isLoading}
-                onPress={() => onSubmit()}
-              >
-                <View className="w-full bg-black py-4 px-2 rounded-xl">
-                  {isLoading ? (
-                    <ActivityIndicator />
-                  ) : (
-                    <Text className="font-poppins-semibold600 text-white text-sm text-center">
-                      Create Account
-                    </Text>
-                  )}
-                </View>
-              </TouchableOpacity>
-            </View>
-          </View>
-
-          <Text className="font-poppins-semibold600 text-center text-lg text-black my-6">
-            or
+    <AuthRedirect>
+      <View className="flex-1 bg-white">
+        <Stack.Screen
+          options={{
+            title: "Sign Up",
+            headerBackVisible: false,
+            headerShown: true,
+          }}
+        />
+        <ScrollView className="flex-1">
+          <Text className="text-center font-poppins-semiboldItalic600">
+            Please fill out every into
           </Text>
+          <View className="flex-1 items-center justify-center pt-2 pb-20 px-7">
+            <View className="space-y-4 w-full">
+              <View>
+                <Controller
+                  control={control}
+                  name="fullName"
+                  render={({
+                    field: { onBlur, onChange, value },
+                    fieldState: { error },
+                  }) => (
+                    <FormControlInput
+                      placeholder="Full Name"
+                      textContentType="name"
+                      onBlur={onBlur}
+                      onChangeText={onChange}
+                      value={value}
+                      errorMessage={error?.message}
+                    />
+                  )}
+                />
+              </View>
 
-          <TouchableOpacity
-            className="w-full"
-            onPress={() => signInWithGoogle()}
-          >
-            <View className="flex flex-row items-center py-3 px-2 rounded-xl justify-center border-2 border-black">
-              <IconLoginGoogle />
-              <Text className="font-poppins-semibold600 text-black text-sm text-center ml-4">
-                Sign up with Google
-              </Text>
+              <View>
+                <Controller
+                  control={control}
+                  name="matricNumber"
+                  render={({
+                    field: { onBlur, onChange, value },
+                    fieldState: { error },
+                  }) => (
+                    <FormControlInput
+                      placeholder="Matric Number"
+                      onBlur={onBlur}
+                      onChangeText={onChange}
+                      value={value}
+                      errorMessage={error?.message}
+                    />
+                  )}
+                />
+              </View>
+
+              <View>
+                <Controller
+                  control={control}
+                  name="department"
+                  render={({
+                    field: { onBlur, onChange, value },
+                    fieldState: { error },
+                  }) => (
+                    <FormControlInput
+                      placeholder="Department"
+                      onBlur={onBlur}
+                      onChangeText={onChange}
+                      value={value}
+                      errorMessage={error?.message}
+                    />
+                  )}
+                />
+              </View>
+
+              <View>
+                <Controller
+                  control={control}
+                  name="phoneNumber"
+                  defaultValue="+234"
+                  render={({
+                    field: { onBlur, onChange, value },
+                    fieldState: { error },
+                  }) => (
+                    <FormControlInput
+                      placeholder="Phone Number"
+                      textContentType="telephoneNumber"
+                      onBlur={onBlur}
+                      onChangeText={onChange}
+                      value={value}
+                      errorMessage={error?.message}
+                    />
+                  )}
+                />
+              </View>
+
+              <View>
+                <Controller
+                  control={control}
+                  name="email"
+                  render={({
+                    field: { onBlur, onChange, value },
+                    fieldState: { error },
+                  }) => (
+                    <FormControlInput
+                      placeholder="Email"
+                      textContentType="emailAddress"
+                      onBlur={onBlur}
+                      onChangeText={onChange}
+                      value={value}
+                      errorMessage={error?.message}
+                    />
+                  )}
+                />
+              </View>
+
+              <View>
+                <Controller
+                  control={control}
+                  name="password"
+                  render={({
+                    field: { onBlur, onChange, value },
+                    fieldState: { error },
+                  }) => (
+                    <FormControlInput
+                      placeholder="Enter Password"
+                      textContentType="newPassword"
+                      onBlur={onBlur}
+                      onChangeText={onChange}
+                      value={value}
+                      errorMessage={error?.message}
+                      secureTextEntry
+                    />
+                  )}
+                />
+              </View>
+
+              <View>
+                <Controller
+                  control={control}
+                  name="confirmPassword"
+                  render={({
+                    field: { onBlur, onChange, value },
+                    fieldState: { error },
+                  }) => (
+                    <FormControlInput
+                      placeholder="Confirm Password"
+                      textContentType="newPassword"
+                      onBlur={onBlur}
+                      onChangeText={onChange}
+                      value={value}
+                      errorMessage={error?.message}
+                      secureTextEntry
+                    />
+                  )}
+                />
+              </View>
+
+              <View>
+                <TouchableOpacity
+                  className={clsx("mt-2", {
+                    "opacity-60": isLoading,
+                  })}
+                  disabled={isLoading}
+                  onPress={() => onSubmit()}
+                >
+                  <View className="w-full bg-black py-4 px-2 rounded-xl">
+                    {isLoading ? (
+                      <ActivityIndicator />
+                    ) : (
+                      <Text className="font-poppins-semibold600 text-white text-sm text-center">
+                        Create Account
+                      </Text>
+                    )}
+                  </View>
+                </TouchableOpacity>
+              </View>
             </View>
-          </TouchableOpacity>
 
-          <Link
-            href="/"
-            className="mt-3 text-center font-poppins-semibold600 text-base"
-          >
-            Already have an account? Sign in
-          </Link>
-        </View>
-      </ScrollView>
-    </View>
+            <Text className="font-poppins-semibold600 text-center text-lg text-black my-6">
+              or
+            </Text>
+
+            <TouchableOpacity
+              className="w-full"
+              onPress={() => signInWithGoogle()}
+            >
+              <View className="flex flex-row items-center py-3 px-2 rounded-xl justify-center border-2 border-black">
+                <IconLoginGoogle />
+                <Text className="font-poppins-semibold600 text-black text-sm text-center ml-4">
+                  Sign up with Google
+                </Text>
+              </View>
+            </TouchableOpacity>
+
+            <Link
+              href="/"
+              className="mt-3 text-center font-poppins-semibold600 text-base"
+            >
+              Already have an account? Sign in
+            </Link>
+          </View>
+        </ScrollView>
+      </View>
+    </AuthRedirect>
   );
 };
 
