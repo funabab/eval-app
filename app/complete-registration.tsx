@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Stack, useRouter } from "expo-router";
+import { Stack, useNavigation, useRouter } from "expo-router";
 import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
 import { ScrollView } from "react-native";
 import { Controller, useForm } from "react-hook-form";
@@ -31,8 +31,8 @@ const CompleteRegistrationScreen: React.FC<Props> = () => {
   const onSubmit = handleSubmit(async (data) => {
     setIsLoading(true);
     await updateDoc(doc(firebaseFirestore, `users/${user.id}`), data);
-    setIsLoading(false);
     router.replace("/dashboard");
+    setIsLoading(false);
   });
 
   return (

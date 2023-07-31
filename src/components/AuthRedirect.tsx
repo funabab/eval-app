@@ -19,7 +19,7 @@ const AuthRedirect: React.FC<React.PropsWithChildren<Props>> = ({
   useEffect(() => {
     const onFocus = () => {
       if (!isLoading && user) {
-        router.push(redirectTo);
+        router.replace(redirectTo);
       }
     };
 

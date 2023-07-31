@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Stack, useRouter } from "expo-router";
+import { Stack, useNavigation, useRouter } from "expo-router";
 import {
   ActivityIndicator,
   Image,
@@ -27,6 +27,7 @@ const RegisterFaceScreen = () => {
   >();
   const [resgiterFace] = useHttpsCallable(firebaseFunction, "registerUserFace");
   const router = useRouter();
+  const navigate = useNavigation();
 
   const handleCaptureImage = async () => {
     const result = await ImagePicker.launchCameraAsync({
