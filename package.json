@@ -16,10 +16,12 @@
     "@react-native-picker/picker": "2.4.8",
     "@types/react": "~18.0.27",
     "clsx": "^2.0.0",
+    "dayjs": "^1.11.9",
     "expo": "~48.0.18",
     "expo-constants": "~14.2.1",
     "expo-dev-client": "~2.2.1",
     "expo-face-detector": "~12.1.1",
+    "expo-image-manipulator": "~11.1.1",
     "expo-image-picker": "~14.1.1",
     "expo-linking": "~4.0.1",
     "expo-router": "^1.0.0",
@@ -40,8 +42,7 @@
     "react-native-web": "~0.18.10",
     "typescript": "^4.9.4",
     "validator": "^13.9.0",
-    "zod": "^3.21.4",
-    "expo-image-manipulator": "~11.1.1"
+    "zod": "^3.21.4"
   },
   "overrides": {
     "metro": "0.76.0",

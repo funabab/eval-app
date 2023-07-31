@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { useRouter } from "expo-router";
 import {
   BackHandler,
@@ -17,12 +17,27 @@ import IconDashboardNotification from "../../src/components/icons/IconDashboardN
 import IconDashboardTimetable from "../../src/components/icons/IconDashboardTimetable";
 import IconDashboardExit from "../../src/components/icons/IconDashboardExit";
 import { useUser } from "../../src/hooks/useUser";
+import dayjs from "dayjs";
 
 interface Props {}
 
 const DashboardHome: React.FC<Props> = () => {
   const router = useRouter();
   const { user } = useUser();
+
+  const dayPeriod = useMemo(() => {
+    const date = dayjs();
+    const hour = date.hour();
+
+    if (hour <= 12) {
+      return "Morning";
+    } else if (hour <= 16) {
+      return "Afternoon";
+    } else {
+      return "Evening";
+    }
+  }, []);
+
   return (
     <View className="flex-1 bg-white">
       <ScrollView className="flex-1 px-5">
@@ -33,7 +48,7 @@ const DashboardHome: React.FC<Props> = () => {
                 Hi {user?.displayName}
               </Text>
               <Text className="text-xs font-poppins-medium500 text-black">
-                Good Morning
+                Good {dayPeriod}
               </Text>
             </View>
             <IconDashboardUser />
