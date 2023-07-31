@@ -7,6 +7,7 @@ import clsx from "clsx";
 import { useUser } from "../../../src/hooks/useUser";
 import { useSignOut } from "react-firebase-hooks/auth";
 import { firebaseAuth } from "../../../src/firebase";
+import LocationProtect from "../../../src/components/LocationProtect";
 
 const MENU_ITEMS = ["Profile", "Evaluation", "Courses", "Log out"];
 

@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Modal, Text, TouchableOpacity, View } from "react-native";
 import * as Location from "expo-location";
+import { useDocumentData } from "react-firebase-hooks/firestore";
+import { doc } from "firebase/firestore";
+import { firebaseFirestore } from "../firebase";
+import Loader from "./Loader";
+import { Position, getDistance } from "aviation-math";
 
 interface Props {}
 
@@ -11,6 +16,20 @@ const LocationProtect: React.FC<React.PropsWithChildren<Props>> = ({
     useState<Location.PermissionStatus>(Location.PermissionStatus.UNDETERMINED);
   const [currentLocation, setCurrentLocation] =
     useState<Location.LocationObject>();
+
+  const [outOfRange, setOutOfRange] = useState(false);
+
+  const [systemDoc, isLoadingSystemDoc] = useDocumentData(
+    doc(firebaseFirestore, "system/kv")
+  );
+
+  const locations = systemDoc?.locations as
+    | { lat: number; lng: number }[]
+    | undefined;
+
+  const locationDistance = systemDoc?.locationDistanceRange as
+    | number
+    | undefined;
 
   useEffect(() => {
     Location.getForegroundPermissionsAsync().then((response) => {
@@ -29,6 +48,28 @@ const LocationProtect: React.FC<React.PropsWithChildren<Props>> = ({
       );
     }
   }, [locationStatus]);
+
+  useEffect(() => {
+    if (locationDistance && locations && currentLocation) {
+      const locationDistances = locations
+        .map((location) =>
+          getDistance(
+            new Position(location.lat, location.lng),
+            new Position(
+              currentLocation.coords.latitude,
+              currentLocation.coords.longitude
+            )
+          )
+        )
+        .filter((distance) => distance < locationDistance);
+
+      setOutOfRange(locationDistances.length === 0);
+    }
+  }, [locations, currentLocation, locationDistance]);
+
+  if (isLoadingSystemDoc && !locations) {
+    return <Loader />;
+  }
 
   return (
     <React.Fragment>
@@ -66,6 +107,32 @@ const LocationProtect: React.FC<React.PropsWithChildren<Props>> = ({
               >
                 <Text className="text-sm text-center font-poppins-medium500 text-black">
                   Cancel
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
+      )}
+
+      {outOfRange && (
+        <Modal className="absolute left-0 top-0 w-screen h-screen" transparent>
+          <View className="flex-1 bg-black/40 flex justify-center">
+            <View className="bg-white px-10 py-9 rounded-2xl">
+              <Text className="font-poppins-semibold600 text-xl text-center">
+                Not within location
+              </Text>
+              <Text className="mt-2 text-center font-poppins-medium500 text-sm">
+                You are not within the location that you can access this app.
+              </Text>
+
+              <TouchableOpacity
+                className="py-4 rounded-md bg-black mt-8"
+                onPress={() => {
+                  throw new Error("Out of range");
+                }}
+              >
+                <Text className="text-white text-sm text-center font-poppins-medium500">
+                  OK
                 </Text>
               </TouchableOpacity>
             </View>
