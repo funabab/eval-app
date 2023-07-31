@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { useRouter } from "expo-router";
 import { FlatList, Text, TouchableOpacity, View } from "react-native";
-import { useCollectionDataOnce } from "react-firebase-hooks/firestore";
+import { useCollectionData } from "react-firebase-hooks/firestore";
 import { Timestamp, collection } from "firebase/firestore";
 import { firebaseFirestore } from "../../../src/firebase";
 import Loader from "../../../src/components/Loader";
@@ -10,7 +10,7 @@ import LocationProtect from "../../../src/components/LocationProtect";
 
 const NotificationScreen = () => {
   const router = useRouter();
-  const [broadcasts, isLoading] = useCollectionDataOnce(
+  const [broadcasts, isLoading] = useCollectionData(
     collection(firebaseFirestore, "broadcasts")
   );
 
