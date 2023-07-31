@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Stack, useRouter } from "expo-router";
-import { Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
 import { ScrollView } from "react-native";
 import { Controller, useForm } from "react-hook-form";
 import FormControlInput from "../src/components/FormControlInput";
@@ -97,9 +97,13 @@ const CompleteRegistrationScreen: React.FC<Props> = () => {
                 onPress={() => onSubmit()}
               >
                 <View className="w-full bg-black py-4 px-2 rounded-xl">
-                  <Text className="font-poppins-semibold600 text-white text-sm text-center">
-                    Complete Your Registration
-                  </Text>
+                  {isLoading ? (
+                    <ActivityIndicator />
+                  ) : (
+                    <Text className="font-poppins-semibold600 text-white text-sm text-center">
+                      Complete Your Registration
+                    </Text>
+                  )}
                 </View>
               </TouchableOpacity>
             </View>

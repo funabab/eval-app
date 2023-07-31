@@ -69,4 +69,5 @@ export type User = FirebaseUser & {
   matricNumber: string;
   department: string;
   id: string;
+  faceEmbeddings: number[];
 };

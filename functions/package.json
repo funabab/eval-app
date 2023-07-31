@@ -15,8 +15,13 @@
   },
   "main": "lib/functions/src/index.js",
   "dependencies": {
+    "@pinecone-database/pinecone": "^0.1.6",
+    "@tensorflow/tfjs-node": "^4.9.0",
+    "canvas": "^2.11.2",
+    "face-api.js": "^0.22.2",
     "firebase-admin": "^11.8.0",
     "firebase-functions": "^4.3.1",
+    "models": "file:models",
     "validator": "^13.9.0",
     "zod": "^3.21.4"
   },

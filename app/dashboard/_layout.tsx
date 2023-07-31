@@ -9,6 +9,15 @@ import IconTabNotification from "../../src/components/icons/IconTabNotification"
 import IconTabHome from "../../src/components/icons/IconTabHome";
 import { useRouter } from "expo-router";
 import { useUser } from "../../src/hooks/useUser";
+import { User } from "../../src/schemas";
+
+const checkIncompleteRegistration = (user: User) => {
+  return !user?.department || !user?.matricNumber;
+};
+
+const checkFaceRecognitionRegistration = (user: User) => {
+  return !user?.faceEmbeddings;
+};
 
 const DashboardLayout = () => {
   const { user, isLoading } = useUser();
@@ -17,6 +26,17 @@ const DashboardLayout = () => {
   useEffect(() => {
     if (!isLoading && !user) {
       router.replace("/");
+    } else {
+      if (user) {
+        if (checkIncompleteRegistration(user)) {
+          router.replace("/complete-registration");
+          return;
+        }
+        if (checkFaceRecognitionRegistration(user)) {
+          router.replace("/register-face");
+          return;
+        }
+      }
     }
   }, [user, isLoading]);
 

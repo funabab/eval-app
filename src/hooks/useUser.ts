@@ -14,7 +14,7 @@ export const useUser = () => {
 
   return {
     isLoading: isUserLoading || isLoading,
-    user,
+    user: firebaseUser ? user : undefined,
     error,
     userDocSnapshot,
   };

@@ -1,6 +1,6 @@
 import { Link, Stack, useRouter } from "expo-router";
 import IconLoginUser from "../src/components/icons/IconLoginUser";
-import { ScrollView, Text, View } from "react-native";
+import { ActivityIndicator, ScrollView, Text, View } from "react-native";
 import FormControl from "../src/components/FormControl";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import IconLoginGoogle from "../src/components/icons/IconLoginGoogle";
@@ -112,9 +112,13 @@ export const LoginScreen = () => {
                 onPress={() => onSubmit()}
               >
                 <View className="w-full bg-black py-4 px-2 rounded-xl">
-                  <Text className="font-poppins-semibold600 text-white text-sm text-center">
-                    Login
-                  </Text>
+                  {isLoading ? (
+                    <ActivityIndicator />
+                  ) : (
+                    <Text className="font-poppins-semibold600 text-white text-sm text-center">
+                      Login
+                    </Text>
+                  )}
                 </View>
               </TouchableOpacity>
 

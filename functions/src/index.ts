@@ -6,6 +6,9 @@ import { registerAccountBodySchema } from "../../src/schemas";
 import { FirebaseError } from "@firebase/util";
 import { ZodError } from "zod";
 import { auth } from "firebase-functions";
+import * as canvas from "canvas";
+import * as faceapi from "face-api.js";
+import { PineconeClient } from "@pinecone-database/pinecone";
 
 initializeApp();
 
@@ -64,3 +67,101 @@ export const handleOnCreateUser = auth.user().onCreate(async (user) => {
     }
   );
 });
+
+export const handleOnDeleteUser = auth.user().onDelete(async (user) => {
+  const pinecone = new PineconeClient();
+  await pinecone.init({
+    apiKey: process.env.PINECONE_API_KEY as string,
+    environment: process.env.PINECONE_API_ENV as string,
+  });
+
+  const firestore = getFirestore();
+  await firestore.runTransaction(async (tx) => {
+    // eslint-disable-next-line new-cap
+    const index = pinecone.Index(
+      process.env.PINECONE_API_FACE_RECOGNITION_INDEX as string
+    );
+
+    await index.delete1({
+      ids: [user.uid],
+    });
+
+    tx.delete(firestore.doc(`/users/${user.uid}`));
+  });
+});
+
+export const registerUserFace = onCall(
+  { maxInstances: 10, memory: "512MiB" },
+  async (request) => {
+    if (!request.auth) {
+      throw new HttpsError("unauthenticated", "Unauthenticated");
+    }
+
+    const imageBase64: string = request.data;
+
+    if (!imageBase64) {
+      throw new HttpsError("invalid-argument", "Invalid arguments");
+    }
+
+    await faceapi.nets.ssdMobilenetv1.loadFromDisk("./models");
+    await faceapi.nets.faceLandmark68Net.loadFromDisk("./models");
+    await faceapi.nets.faceRecognitionNet.loadFromDisk("./models");
+
+    const { Canvas, Image, ImageData } = canvas;
+    faceapi.env.monkeyPatch({
+      Canvas,
+      Image,
+      ImageData,
+    } as unknown as faceapi.Environment);
+
+    const input = (await canvas.loadImage(
+      `data:image/jpg;base64,${imageBase64}`
+    )) as unknown as HTMLImageElement;
+
+    const result = await faceapi
+      .detectSingleFace(input)
+      .withFaceLandmarks()
+      .withFaceDescriptor();
+
+    if (!result) {
+      throw new HttpsError("not-found", "No face found");
+    }
+
+    const pinecone = new PineconeClient();
+    await pinecone.init({
+      apiKey: process.env.PINECONE_API_KEY as string,
+      environment: process.env.PINECONE_API_ENV as string,
+    });
+
+    const uid = request.auth.uid;
+    const embedding = Array.from(result.descriptor);
+    const firestore = getFirestore();
+
+    await firestore.runTransaction(async (tx) => {
+      // eslint-disable-next-line new-cap
+      const index = await pinecone.Index(
+        process.env.PINECONE_API_FACE_RECOGNITION_INDEX as string
+      );
+
+      await index.upsert({
+        upsertRequest: {
+          vectors: [
+            {
+              id: uid,
+              values: embedding,
+            },
+          ],
+        },
+      });
+
+      tx.update(firestore.doc(`/users/${uid}`), {
+        faceEmbeddings: embedding,
+      });
+    });
+
+    return {
+      success: true,
+      message: "Face registered successfully",
+    };
+  }
+);

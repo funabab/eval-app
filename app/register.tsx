@@ -1,6 +1,12 @@
 import { Link, Stack, useRouter } from "expo-router";
 import React, { useEffect } from "react";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import {
+  ActivityIndicator,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import FormControlInput from "../src/components/FormControlInput";
 import IconLoginGoogle from "../src/components/icons/IconLoginGoogle";
 import { Controller, useForm } from "react-hook-form";
@@ -214,9 +220,13 @@ const RegitserScreen = () => {
                 onPress={() => onSubmit()}
               >
                 <View className="w-full bg-black py-4 px-2 rounded-xl">
-                  <Text className="font-poppins-semibold600 text-white text-sm text-center">
-                    Create Account
-                  </Text>
+                  {isLoading ? (
+                    <ActivityIndicator />
+                  ) : (
+                    <Text className="font-poppins-semibold600 text-white text-sm text-center">
+                      Create Account
+                    </Text>
+                  )}
                 </View>
               </TouchableOpacity>
             </View>
