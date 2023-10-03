@@ -45,7 +45,7 @@
     "react-native-web": "~0.18.10",
     "typescript": "^4.9.4",
     "validator": "^13.9.0",
-    "zod": "^3.21.4"
+    "zod": "^3.22.3"
   },
   "overrides": {
     "metro": "0.76.0",
